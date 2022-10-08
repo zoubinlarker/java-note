@@ -7013,3 +7013,20 @@ kafka默认模式是at least once，但这种模式可能会产生重复消息�
 
 at least once + 幂等
 
+
+
+Kafka VS RocketMQ
+
+
+
+1. 使用场景：Kafka适合日志处理；RocketMQ适合业务处理
+
+2. 性能：Kafka吞吐量更高，单机百万/秒；RocketMQ单机10万/秒。
+
+　　因为Kafka一个topic有很多partition，代表很多目录，每个目录下有很多segment，每个代表一个消息文件，而RocketMQ存储消息只有commitLog文件。所以Kafka可以并发写，快于RocketMQ。但同样的，当Topic增加，Kafka分区文件增多，文件刷盘时会竞争磁盘资源，而导致效率降低。
+
+　　同时，生产者有一个发送消息的缓存队列，客户端发送后，放入缓存，立刻返回成功。当缓存队列达到阈值，才真正发送给broker，此举合并了多次请求，减少网络IO，但增大消息丢失风险
+
+3. 特殊消息：Kafka不支持定时，事务消息等
+
+4. 支持队列数：Kafka超过64个队列（partition）性能下降严重，而RocketMQ最高支持5万个队列
