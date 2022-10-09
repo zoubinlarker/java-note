@@ -3,3 +3,5 @@
 
 
 MQ：RocketMQ、Kafka
+
+DB：MySQL、Redis
